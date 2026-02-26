@@ -14,17 +14,17 @@ app.use(cors())
 app.use(express.json())
 app.use(clerkMiddleware())
 app.use(arjectMiddleware)
- 
 
-app.use("/api/users" , userRoutes)
-app.use("/api/posts" , postRoutes)
-app.use("/api/comments" , commentRoutes)
-app.use("/api/notifications" , notificationRoutes)
+
+app.use("/api/users", userRoutes)
+app.use("/api/posts", postRoutes)
+app.use("/api/comments", commentRoutes)
+app.use("/api/notifications", notificationRoutes)
 
 // error handling middleware
-app.use((err , req , res) => {
-    console.error("Unhandled error:" , err)
-    res.status(500).json({error: err.message || "Internal Server Error"})
+app.use((err, req, res) => {
+    console.error("Unhandled error:", err)
+    res.status(500).json({ error: err.message || "Internal Server Error" })
 })
 
 
@@ -38,9 +38,12 @@ app.get("/", (req, res) => {
 const startServer = async () => {
     try {
         await connectDB()
-        app.listen(ENV.PORT, () => {
-            console.log(`Server is running on port ${ENV.PORT}`)
-        })
+        if (ENV.NODE_ENV !== "production") {
+            app.listen(ENV.PORT, () => {
+                console.log(`Server is running on port ${ENV.PORT}`)
+            })
+        }
+
     } catch (error) {
         console.log("Error Starting Server", error)
         process.exit(1)
