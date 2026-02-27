@@ -45,7 +45,7 @@ export const syncUser = asyncHandler(async (req, res) => {
         profilePicture: clerkUser.imageUrl || ""
     }
 
-    const newUser = User.create(userData)
+    const newUser = await User.create(userData)
     res.status(201).json({ message: "User created successfully", newUser })
 })
 
