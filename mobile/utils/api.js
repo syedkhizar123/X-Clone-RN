@@ -27,5 +27,12 @@ export const useApiClient = () => {
 export const userApi = {
     syncUser: (api) => api.post("/users/sync"),
     getCurrentUser: (api) => api.get("/users/me"),
-    updateProfile: (api) => api.put("/users/profile" , data)
+    updateProfile: (api , data) => api.put("/users/profile" , data)
+}
+
+export const postApi = {
+   createPost: (api , data) => api.post("/posts/create" , data),
+   getPosts: (api) => api.get("/posts"),
+   getUserPosts: (api) => api.get(`/posts/user/${username}`)
+   get
 }

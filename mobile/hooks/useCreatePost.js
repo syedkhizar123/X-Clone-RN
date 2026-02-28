@@ -51,7 +51,7 @@ export const useCreatePost = () => {
         },
         onError: (error) => {
             console.log("UPLOAD ERROR:", error.response?.data || error.message)
-            Alert.alert("Error", "Failed to create post. Please try again")
+            Alert.alert("Error", `Failed to create post. Please try again ${JSON.stringify(error.response?.data.error)}`)
         }
     })
 

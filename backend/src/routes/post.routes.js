@@ -7,7 +7,7 @@ const router = express.Router()
 
 // PUBLIC ROUTES
 router.get("/" , getPosts)
-router.get("/:PostId" , getPost)
+router.get("/:postId" , getPost)
 router.get("/user/:username" , getUserPosts)
 
 // PROTECTED ROUTES
