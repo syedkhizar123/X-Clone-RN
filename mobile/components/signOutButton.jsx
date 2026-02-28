@@ -8,7 +8,7 @@ export const SignOutButton = () => {
   return (
     <View>
       <TouchableOpacity onPress={() => handleSignOut()}>
-        <Feather name='log-out' size={24} color='red' />
+        <Feather name='log-out' size={24} color='#cf3838' />
       </TouchableOpacity>
     </View>
   )

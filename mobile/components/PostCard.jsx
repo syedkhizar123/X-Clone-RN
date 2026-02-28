@@ -3,16 +3,16 @@ import { formatDate, formatNumber } from '../utils/formatter'
 import { View, Text, Alert, Image, TouchableOpacity } from 'react-native'
 
 
-const PostCard = ({ post, onLike, onDelete, isLiked, currentUser }) => {
+const PostCard = ({ post, onLike, onDelete, onComment , isLiked, currentUser }) => {
 
-    const isOwnPost = post.user._id === currentUser._id
+    const isOwnPost = post?.user?._id === currentUser?._id
     const handleDeletePost = () => {
         Alert.alert("Delete Post", "Are you sure you want to delete this post?", [
             { text: "cancel", style: "cancel" },
             {
                 text: "Delete",
                 style: "destructive",
-                onPress: () => onDelete(post.id)
+                onPress: () => onDelete(post?._id)
             }
         ])
     }
@@ -49,7 +49,7 @@ const PostCard = ({ post, onLike, onDelete, isLiked, currentUser }) => {
                     )}
 
                     <View className='flex-row justify-between max-w-45'>
-                        <TouchableOpacity className='flex-row items-center' onPress={() => { }}>
+                        <TouchableOpacity className='flex-row items-center' onPress={() => onComment(post)}>
                             <Feather name='message-circle' size={18} color="#657786" />
                             <Text className='text-gray-500 text-sm ml-2'>
                                 {formatNumber(post.comments?.length || 0)}

@@ -3,11 +3,17 @@ import React from 'react'
 import { useCurrentUser } from '../hooks/useCurrentUser'
 import { usePost } from '../hooks/usePosts'
 import PostCard from './PostCard'
+import { useState } from 'react'
+import CommentsModal from './CommentsModal'
 
 const PostsList = () => {
 
     const { currentUser } = useCurrentUser()
     const { posts, isLoading, error, refetch, toggleLike, deletePost , checkIsLiked} = usePost();
+    const [ selectedPostId , setSelectedPostId] = useState(null)
+
+    const selectedPost = selectedPostId ? posts.find((post) => post._id === selectedPostId) : null
+
 
     if (isLoading) {
         return (
@@ -43,10 +49,13 @@ const PostsList = () => {
                 post={post}
                 onLike={toggleLike}
                 onDelete={deletePost}
+                onComment={(post) => setSelectedPostId(post._id)}
                 currentUser={currentUser}
                 isLiked={checkIsLiked(post.likes ,  currentUser)}
             />
         ))}
+
+        <CommentsModal selectedPost={selectedPost} onClose={() => setSelectedPostId(null)} />
        </>
     )
 }

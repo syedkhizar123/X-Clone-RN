@@ -36,7 +36,7 @@ export const postApi = {
     getUserPosts: (api, username) => api.get(`/posts/user/${username}`),
     getPost: (api, postId) => api.get(`/posts/${postId}`),
     likePost: (api, postId) => api.post(`/posts/${postId}/like`),
-    deletePost: (api, postId) => api.post(`/posts/delete/${postId}`)
+    deletePost: (api, postId) => api.delete(`/posts/delete/${postId}`)
 }
 
 export const commentApi = {

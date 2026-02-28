@@ -63,7 +63,7 @@ export const createPost = asyncHandler(async (req, res) => {
 
     const { userId } = getAuth(req)
     const { content } = req.body
-    const image  = req.file
+    const image = req.file
 
     if (!content && !image) {
         return res.status(400).json({ message: "Post must contain either Image or Text" })
@@ -123,13 +123,9 @@ export const likePost = asyncHandler(async (req, res) => {
             $pull: { likes: user._id }
         })
     } else {
-        // if (post.user.toString() === user._id.toString()) {
-        //     return res.status(400).json({ message: "Can't like own post " })
-        // } else {
-            await Post.findByIdAndUpdate(postId, {
-                $push: { likes: user._id }
-             })
-        // }
+        await Post.findByIdAndUpdate(postId, {
+            $push: { likes: user._id }
+        })
     }
     await Notification.create({
         from: user._id,
@@ -142,27 +138,27 @@ export const likePost = asyncHandler(async (req, res) => {
 
 })
 
-export const deletePost = asyncHandler ( async (req , res) => {
+export const deletePost = asyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
     const { postId } = req.params
 
-    const user = await User.findOne({ clerkId : userId})
+    const user = await User.findOne({ clerkId: userId })
     const post = await Post.findById(postId)
 
-    if( !user || !post ){
-        return res.status(404).json({ message: "User or post not found"})
+    if (!user || !post) {
+        return res.status(404).json({ message: "User or post not found" })
     }
 
-    if(post.user.toString() !== user._id.toString()){
-        return res.status(401).json({ message: "Unauthorized. You can only delete your posts."})
+    if (post.user.toString() !== user._id.toString()) {
+        return res.status(401).json({ message: "Unauthorized. You can only delete your posts." })
     }
 
     // Delete comments of the post first
-    await Comment.deleteMany({ post: postId})
+    await Comment.deleteMany({ post: postId })
 
     // Delete post 
     await Post.findByIdAndDelete(postId)
 
-    res.status(200).json({ message: "Post deleted successfully"})
+    res.status(200).json({ message: "Post deleted successfully" })
 
 })
