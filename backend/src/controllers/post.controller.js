@@ -123,13 +123,13 @@ export const likePost = asyncHandler(async (req, res) => {
             $pull: { likes: user._id }
         })
     } else {
-        if (post.user.toString() === user._id.toString()) {
-            return res.status(400).json({ message: "Can't like own post " })
-        } else {
+        // if (post.user.toString() === user._id.toString()) {
+        //     return res.status(400).json({ message: "Can't like own post " })
+        // } else {
             await Post.findByIdAndUpdate(postId, {
                 $push: { likes: user._id }
-            })
-        }
+             })
+        // }
     }
     await Notification.create({
         from: user._id,
