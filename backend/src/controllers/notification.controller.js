@@ -16,7 +16,7 @@ export const getNotifications = asyncHandler(async (req, res) => {
         .populate("post", "content image")
         .populate("comment", "content")
 
-    res.status(200).json({ message: "Notifications fetched successfully" })
+    res.status(200).json({ message: "Notifications fetched successfully" , notifications})
 })
 
 export const deleteNotifications = asyncHandler(async (req, res) => {
