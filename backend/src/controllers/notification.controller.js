@@ -21,14 +21,14 @@ export const getNotifications = asyncHandler(async (req, res) => {
 
 export const deleteNotifications = asyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
-    const { notiificationId } = req.params
+    const { notificationId } = req.params
 
     const user = await User.findOne({ clerkId: userId })
 
     if (!user) return res.status(404).json({ message: "User not found" })
 
     const notification = await Notification.findOneAndDelete({ 
-        _id: notiificationId,
+        _id: notificationId,
         to: user._id
     })
 

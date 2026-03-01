@@ -39,7 +39,7 @@ export const createComment = asyncHandler(async (req, res) => {
         $push: { comments: comment._id }
     })
 
-    if (user._id.toString() !== post.user) {
+    if (user._id.toString() !== post.user.toString()) {
         await Notification.create({
             from: user._id,
             to: post.user,

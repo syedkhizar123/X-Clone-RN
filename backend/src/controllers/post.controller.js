@@ -127,12 +127,16 @@ export const likePost = asyncHandler(async (req, res) => {
             $push: { likes: user._id }
         })
     }
-    await Notification.create({
-        from: user._id,
-        to: post.user,
-        type: "like",
-        post: postId
-    })
+
+    if (post.user.toString() !== user._id.toString()) {
+        await Notification.create({
+            from: user._id,
+            to: post.user,
+            type: "like",
+            post: postId
+        })
+
+    }
 
     return res.status(200).json({ message: isLiked ? "Post Unliked Successfully" : "Post Liked Successfully" })
 

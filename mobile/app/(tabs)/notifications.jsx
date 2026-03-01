@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons'
 import { ScrollView } from 'react-native'
 import NoNotifications from '@/components/NoNotifications'
+import NotificationCard from '../../components/NotificationCard'
 
 const NotificationsScreen = () => {
 
@@ -47,9 +48,9 @@ const NotificationsScreen = () => {
                 ) : notifications.length === 0 ? (
                    <NoNotifications />
                 ) : (
-                   <View>
-                    <Text>Hello </Text>
-                   </View>
+                   notifications.map((notification) => (
+                    <NotificationCard key={notification._id} notification={notification} onDelete={deleteNotification} />
+                   ))
                 )}
             </ScrollView>
         </SafeAreaView>

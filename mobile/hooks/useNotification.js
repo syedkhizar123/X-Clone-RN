@@ -8,18 +8,29 @@ export const useNotification = () => {
 
     const { data: notificationsData, isLoading, error, refetch, isRefetching } = useQuery({
         queryKey: ["notifications"],
-        queryFn: async () => {
-            const res = await api.get("/notifications")
-            console.log("Notifications API:", res.data)
-            return res.data.notifications || res.data || []
-        },
+        queryFn: () => api.get("/notifications"),
         select: (res) => res.data.notifications
     })
 
 
+    // const deleteNotificationMutation = useMutation({
+    //     mutationFn: (notificationId) => api.delete(`/notifications/${notificationId}`),
+    //     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notifications"] })
+    // })
     const deleteNotificationMutation = useMutation({
-        mutationFn: (notificationId) => api.delete(`/notifications/${notificationId}`),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notifications"] })
+        mutationFn: async (notificationId) => {
+            console.log("Deleting:", notificationId)
+            const res = await api.delete(`/notifications/${notificationId}`)
+            console.log("Delete response:", res.data)
+            return res.data
+        },
+        onSuccess: () => {
+            console.log("Invalidating notifications")
+            queryClient.invalidateQueries({ queryKey: ["notifications"] })
+        },
+        onError: (err) => {
+            console.log("DELETE ERROR:", err.response?.data || err.message)
+        }
     })
 
     const deleteNotification = (notificationId) => {
