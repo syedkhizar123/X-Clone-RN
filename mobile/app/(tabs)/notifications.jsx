@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNotification } from '../../hooks/useNotification'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -39,6 +39,9 @@ const NotificationsScreen = () => {
                 className='flex-1'
                 contentContainerStyle={{ paddingBottom: 100 + insets.bottom , flexGrow: 1}}
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor='#1DA1F2' />
+                }
             >
                 {isLoading ? (
                     <View className='flex-1 items-center justify-center p-8'>

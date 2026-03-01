@@ -1,11 +1,15 @@
 
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native";
 import { useSocialAuth } from "../../hooks/useSocialAuth";
+import { useState } from "react";
 
 
 export default function Index() {
 
   const { isLoading , handleSocialAuth} = useSocialAuth()
+  const [ googleLoading , setGoogleLoading] = useState(false)
+  const [ appleLoading , setAppleLoading] = useState(false)
+
   return (
     <View className="flex-1  bg-white">
       <View className='flex-1 px-8 justify-between'>
@@ -22,7 +26,7 @@ export default function Index() {
 
           <View className='flex-col gap-2'>
             <TouchableOpacity className='flex-row items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-6'
-              onPress={() => {handleSocialAuth("oauth_google") }}
+              onPress={() => {handleSocialAuth("oauth_google") , setAppleLoading(false) , setGoogleLoading(true) }}
               disabled={isLoading}
               style={{
                 shadowColor: "#000",
@@ -32,7 +36,7 @@ export default function Index() {
                 elevation: 2
               }}
             >
-              {isLoading ? (
+              {isLoading && googleLoading ? (
                 <ActivityIndicator size="small" color='#000' className='py-2' />
               ) : (
                 <View className='flex-row items-center justify-center'>
@@ -50,7 +54,7 @@ export default function Index() {
             </TouchableOpacity>
 
             <TouchableOpacity className='flex-row items-center justify-center bg-white border border-gray-300 rounded-full py-3 px-6'
-              onPress={() => { handleSocialAuth("oauth_apple") }}
+              onPress={() => { handleSocialAuth("oauth_apple") ,setGoogleLoading(false) , setAppleLoading(true) }}
               disabled={isLoading}
               style={{
                 shadowColor: "#000",
@@ -60,7 +64,7 @@ export default function Index() {
                 elevation: 2
               }}
             >
-              {isLoading ? (
+              {isLoading && appleLoading ? (
                 <ActivityIndicator size="small" color='#000' className='py-2' />
               ) : (
                 <View className='flex-row items-center justify-center'>

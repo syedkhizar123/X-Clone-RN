@@ -4,6 +4,7 @@ import { LogBox } from "react-native";
 import { Stack } from "expo-router";
 import "../global.css"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { StatusBar } from "expo-status-bar"
 
 const queryClient = new QueryClient()
 
@@ -18,7 +19,8 @@ export default function RootLayout() {
         <Stack >
           <Stack.Screen name="(auth)" options={{ headerShown: false }} ></Stack.Screen>
           <Stack.Screen name="(tabs)" options={{ headerShown: false, name: "Home" }} ></Stack.Screen>
-        </Stack>;
+        </Stack>
+        <StatusBar style="dark" />
       </QueryClientProvider>
     </ClerkProvider>
   )
