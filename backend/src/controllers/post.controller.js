@@ -56,7 +56,7 @@ export const getUserPosts = asyncHandler(async (req, res) => {
             }
         })
 
-    return res.status(200).json({ message: "User's posts fetched successfully", userPosts: userPosts ? userPosts : "This user has no Posts" })
+    return res.status(200).json({ message: "User's posts fetched successfully", posts: userPosts ? userPosts : "This user has no Posts" })
 })
 
 export const createPost = asyncHandler(async (req, res) => {
