@@ -99,7 +99,7 @@ export const followUser = asyncHandler(async (req, res) => {
 
         await Notification.create({
             from: currentUser._id,
-            to: targetUserId,
+            to: targetUser._id,
             type: "Follow"
         })
     }
