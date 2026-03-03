@@ -96,14 +96,14 @@ const Username = () => {
                                 userProfile[0]._id !== currentUser._id && (
 
                                     userProfile[0].followers.includes(currentUser._id) ? (
-                                        <TouchableOpacity className='border border-gray-300 px-6 py-2 rounded-full bg-gray-200' onPress={() => followUnfollowUser(userProfile[0]._id)} >
+                                        <TouchableOpacity className='border border-gray-300 px-6 py-2 rounded-full bg-gray-200' onPress={() => followUnfollowUser(userProfile[0].clerkId)} >
                                             <Text className='font-semibold text-gray-5=700'>
                                                 Unfollow
                                             </Text>
                                         </TouchableOpacity>
                                     ) : (
                                         <View>
-                                            <TouchableOpacity className='border border-blue-300 px-6 py-2 rounded-full bg-blue-600' onPress={() => followUnfollowUser(userProfile[0]._id)} >
+                                            <TouchableOpacity className='border border-blue-300 px-6 py-2 rounded-full bg-blue-600' onPress={() => followUnfollowUser(userProfile[0].clerkId)} >
                                                 <Text className='font-semibold text-white'>
                                                     Follow
                                                 </Text>
