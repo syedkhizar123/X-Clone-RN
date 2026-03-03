@@ -9,8 +9,7 @@ import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { usePost } from '../../hooks/usePosts'
 import useFollow from '../../hooks/useFollow'
 import { RefreshControl } from 'react-native'
-import FollowersModal from '../../components/FollowersModal'
-import { useState } from 'react'
+
 
 
 const Username = () => {
@@ -21,9 +20,7 @@ const Username = () => {
     const { userProfile, isLoading, error, refetch, isRefetching } = useUserProfile(username)
     const { posts } = usePost(username)
     const { followUnfollowUser } = useFollow()
-    const [isFollowModalVisible, setIsFollowModalVisible] = useState(false)
-    const [selectedList, setSelectedList] = useState([])
-    const [modalTitle, setModalTitle] = useState("")
+
 
     if (error) {
         return (
@@ -141,13 +138,13 @@ const Username = () => {
                             </View>
 
                             <View className='flex-row'>
-                                <TouchableOpacity className='mr-6' onPress={() => {setIsFollowModalVisible(true) , setSelectedList(userProfile[0].following) , setModalTitle("Following")}}>
+                                <TouchableOpacity className='mr-6' >
                                     <Text className='text-gray-900'>
                                         <Text className='font-bold'>{userProfile[0].following.length}</Text>
                                         <Text className='text-gray-500'> Following</Text>
                                     </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className='mr-6' onPress={() => {setIsFollowModalVisible(true) , setSelectedList(userProfile[0].followers) , setModalTitle("Followers")}}>
+                                <TouchableOpacity className='mr-6' >
                                     <Text className='text-gray-900'>
                                         <Text className='font-bold'>{userProfile[0].followers.length}</Text>
                                         <Text className='text-gray-500'> Followers</Text>
@@ -160,12 +157,12 @@ const Username = () => {
                     <PostsList username={username} />
                 </ScrollView>
 
-                <FollowersModal 
+                {/* <FollowersModal 
                     isVisible={isFollowModalVisible}
                     onClose={() => setIsFollowModalVisible(false)}
                     title={modalTitle}
                     user={selectedList}
-                />
+                /> */}
             </SafeAreaView>
         </>
     )

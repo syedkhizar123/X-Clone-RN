@@ -7,7 +7,7 @@ import { clerkClient } from "@clerk/express";
 
 export const getUserProfile = asyncHandler(async (req, res) => {
     const { username } = req.params
-    const user = await User.findOne({ username })
+    const user = await User.find({ username })
        
     if (!user) {
         return res.status(404).json({ message: "User Not Found" })
