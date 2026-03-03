@@ -76,7 +76,9 @@ export const followUser = asyncHandler(async (req, res) => {
     }
 
     const targetUserObjectId = targetUser._id
-    const isFollowing = currentUser.following.includes(targetUserObjectId)
+    const isFollowing = currentUser.following.some(
+        id => id.toString() === targetUserObjectId.toString()
+    )
 
     if (isFollowing) {
         // Unfollow
@@ -102,6 +104,6 @@ export const followUser = asyncHandler(async (req, res) => {
         })
     }
 
-    res.status(200).json({ message: isFollowing ? "User Unfollowed successfully" : "User followed successfully"})
+    res.status(200).json({ message: isFollowing ? "User Unfollowed successfully" : "User followed successfully" })
 
 })
