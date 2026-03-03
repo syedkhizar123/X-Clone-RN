@@ -68,8 +68,8 @@ export const followUser = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: "You can not follow yourself" })
     }
 
-    const currentUser = User.findOne({ clerId: userId })
-    const targetUser = User.findOne({ clerkId: targetUserId })
+    const currentUser = await User.findOne({ clerkId: userId })
+    const targetUser = await User.findOne({ clerkId: targetUserId })
 
     if (!currentUser || !targetUser) {
         return res.status(404).json({ message: "User not found" })

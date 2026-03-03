@@ -23,6 +23,18 @@ export const useComments = () => {
         }
     })
 
+    const deleteCommentMutation = useMutation({
+        mutationFn: async({commentId}) => {
+            const response = await commentApi.deleteComment(api , commentId)
+            return response.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["posts"]})
+        },
+        onError: () => {
+            Alert.alert("Error" , "Failed to delete comment")
+        }
+    })
     const createComment = (postId) => {
         if(!commentText.trim()){
             Alert.alert("Empty Content" , "Please write something to comment")
@@ -31,11 +43,16 @@ export const useComments = () => {
         createCommentMutation.mutate({ postId , content: commentText.trim()})
     }
 
+    const deleteComment = (commentId) => {
+        deleteCommentMutation.mutate({ commentId })
+    }
+
     return {
         commentText,
         setCommentText,
         createComment,
-        isCreatingComment: createCommentMutation.isPending
+        isCreatingComment: createCommentMutation.isPending,
+        deleteComment
     }
 
 }

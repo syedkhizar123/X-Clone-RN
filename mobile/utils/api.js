@@ -27,7 +27,9 @@ export const useApiClient = () => {
 export const userApi = {
     syncUser: (api) => api.post("/users/sync"),
     getCurrentUser: (api) => api.get("/users/me"),
-    updateProfile: (api, data) => api.put("/users/profile", data)
+    updateProfile: (api, data) => api.put("/users/profile", data),
+    getUserProfile: (api , username) => api.get(`/users/profile/${username}`),
+    followUser: (api , targetUserId) => api.post(`/users/follow/${targetUserId}`)
 }
 
 export const postApi = {
@@ -40,5 +42,6 @@ export const postApi = {
 }
 
 export const commentApi = {
-    createComment: (api, postId, content) => api.post(`/comments/post/${postId}`, { content })
+    createComment: (api, postId, content) => api.post(`/comments/post/${postId}`, { content }),
+    deleteComment: (api , commentId) => api.delete(`/comments/${commentId}`)
 }

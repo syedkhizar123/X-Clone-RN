@@ -55,7 +55,7 @@ const PostsList = ({ username }) => {
             />
         ))}
 
-        <CommentsModal selectedPost={selectedPost} onClose={() => setSelectedPostId(null)} />
+        <CommentsModal selectedPost={selectedPost}  onClose={() => setSelectedPostId(null)} />
        </>
     )
 }

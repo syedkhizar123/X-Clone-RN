@@ -1,17 +1,32 @@
-import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Alert } from 'react-native'
 import { useComments } from '../hooks/useComments'
 import { useCurrentUser } from '../hooks/useCurrentUser'
 import { Modal } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-const CommentsModal = ({ selectedPost, onClose }) => {
+const CommentsModal = ({ selectedPost, onClose, }) => {
 
-    const { commentText, setCommentText, createComment, isCreatingComment } = useComments()
+    const { commentText, setCommentText, createComment, isCreatingComment , deleteComment} = useComments()
     const { currentUser } = useCurrentUser()
 
     const handleClose = () => {
         onClose()
         setCommentText("")
+    }
+
+    const handleDelete = (commentId) => {
+        Alert.alert("Delete Comment" , "Are you sure you want to delete comment?" , [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Delete",
+                style: "destructive",
+                onPress: () => {deleteComment(commentId)}
+                
+            }
+        ])
     }
     return (
         <Modal visible={!!selectedPost} animationType='slide' presentationStyle='pageSheet'>
@@ -32,6 +47,7 @@ const CommentsModal = ({ selectedPost, onClose }) => {
                     <View className='border-b border-gray-100 bg-white p-4 '>
                         <View className="flex-row">
                             <Image source={{ uri: selectedPost.user.profilePicture }} className="size-12 rounded-full mr-3" />
+
                             <View className="flex-1">
                                 <View className="flex-row items-center mb-1">
                                     <Text className='font-bold text-gray-900 mr-1'>
@@ -61,28 +77,42 @@ const CommentsModal = ({ selectedPost, onClose }) => {
                     </View>
 
                     {/* Comments List */}
-                    {selectedPost.comments.map((comment) => (
-                        <View key={comment._id} className='border-b border-gray-100 bg-white p-4'>
-                            <View className='flex-row'>
-                                <Image
-                                    source={{ uri: comment.user.profilePicture }}
-                                    className="w-10 h-10 rounded-full mr-3"
-                                />
-                                <View className='flex-1'>
-                                    <View className='flex-row items-center mb-1'>
-                                        <Text className='font-bold text-gray-900 mr-1'>
-                                            {comment.user.firstName} {comment.user.lastName}
-                                        </Text>
-                                        <Text className='text-gray-500 text-sm ml-1'>@{comment.user.username}</Text>
+                    {selectedPost.comments.map((comment) => {
+                        const isOwner = comment.user._id === currentUser?._id
+                        return (
 
-                                       
+                            <View key={comment._id} className='border-b border-gray-100 bg-white p-4'>
+                                <View className='flex-row'>
+                                    <Image
+                                        source={{ uri: comment.user.profilePicture }}
+                                        className="w-10 h-10 rounded-full mr-3"
+                                    />
+
+                                    <View className='flex-1'>
+                                        <View className='flex-row items-center mb-1'>
+                                            <Text className='font-bold text-gray-900 mr-1'>
+                                                {comment.user.firstName} {comment.user.lastName}
+                                            </Text>
+                                            <Text className='text-gray-500 text-sm ml-1'>@{comment.user.username}</Text>
+
+
+                                        </View>
+
+                                        <Text className="text-gray-900 text-base leading-5 mb-2"> {comment.content} </Text>
                                     </View>
-
-                                    <Text className="text-gray-900 text-base leading-5 mb-2"> {comment.content} </Text>
+                                    {
+                                        isOwner ? (
+                                            <TouchableOpacity onPress={() => handleDelete(comment._id)}>
+                                                <Feather name='trash' size={16} color='gray' />
+                                            </TouchableOpacity>
+                                        ) : (
+                                            null
+                                        )
+                                    }
                                 </View>
                             </View>
-                        </View>
-                    ))}
+                        )
+                    })}
 
                     {/* Add Comment Input */}
                     <View className='p-4 border-t border-gray-100'>

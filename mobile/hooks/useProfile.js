@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Alert } from "react-native"
-import { useMutation, useMutationState , useQueryClient } from "@tanstack/react-query"
-// import { useApiClient } from "../utils/api"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useApiClient , userApi } from "../utils/api"
 import { useCurrentUser } from "./useCurrentUser"
 
@@ -48,7 +47,7 @@ const useProfile = () => {
     const updateFormField = (field , value) => {
         setFormData((prev) => ({ ...prev , [field] : value}))
     }
-    
+
     return {
         isEditing,
         formData,
@@ -57,7 +56,7 @@ const useProfile = () => {
         saveProfile: () => updateProfileMutation.mutate(formData),
         updateFormField,
         isUpdating: updateProfileMutation.isPending,
-        refetch: () => queryClient.invalidateQueries({ queryKey: ["authUser"]})
+        refetch: () => queryClient.invalidateQueries({ queryKey: ["authUser"]}),
     }
 }
 

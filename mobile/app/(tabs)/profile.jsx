@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ActivityIndicator, ScrollView, Image, TouchableOpacity, RefreshControl } from 'react-native'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { SignOutButton } from '../../components/signOutButton'
@@ -36,7 +36,7 @@ const ProfileScreen = () => {
     }
 
     return (
-        <SafeAreaView className='flex-1 bg-white'>
+        <SafeAreaView className='flex-1 bg-white' edges={["top"]}>
 
             {/* Header */}
             <View className='flex-row items-center justify-between px-4 py-3 border-b border-gray-100'>
@@ -53,6 +53,15 @@ const ProfileScreen = () => {
                 className='flex-1'
                 contentContainerStyle={{ paddingBottom: 100 + insets.bottom }}
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl 
+                        refreshing={isRefetching}
+                        onRefresh={() => {
+                            refetchPosts()
+                            refetch()
+                        }}
+                    />
+                }
             >
                 <Image
                     className='h-48 w-full'
@@ -81,13 +90,12 @@ const ProfileScreen = () => {
                             <Feather name='check-circle' size={20} color='#1DA1F2' />
                         </View>
 
-                        <Text></Text>
                         <Text className='text-gray-500 mb-2'>{currentUser.username}</Text>
                         <Text className='text-gray-900 mb-3'>{currentUser.bio}</Text>
 
                         <View className='flex-row items-center mb-2'>
                             <Feather name='map-pin' size={16} color='#657786' />
-                            <Text className='text-gray-50 ml-2'>{currentUser.location}</Text>
+                            <Text className='text-gray-500 ml-2'>{currentUser.location}</Text>
                         </View>
 
                         <View className='flex-row items-center mb-2'>

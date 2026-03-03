@@ -1,9 +1,10 @@
 import { AntDesign, Feather } from '@expo/vector-icons'
 import { formatDate, formatNumber } from '../utils/formatter'
 import { View, Text, Alert, Image, TouchableOpacity } from 'react-native'
+import { router } from 'expo-router'
 
 
-const PostCard = ({ post, onLike, onDelete, onComment , isLiked, currentUser }) => {
+const PostCard = ({ post, onLike, onDelete, onComment, isLiked, currentUser }) => {
 
     const isOwnPost = post?.user?._id === currentUser?._id
     const handleDeletePost = () => {
@@ -19,10 +20,13 @@ const PostCard = ({ post, onLike, onDelete, onComment , isLiked, currentUser }) 
     return (
         <View className='border-b border-gray-100 bg-white'>
             <View className='flex-row p-4'>
-                <Image
-                    source={{ uri: post.user.profilePicture || "" }}
-                    className='w-12 h-12 rounded-full mr-3'
-                />
+                <TouchableOpacity onPress={() => router.push(`/profile/${post.user.username}`)}>
+                    <Image
+                        source={{ uri: post.user.profilePicture || "" }}
+                        className='w-12 h-12 rounded-full mr-3'
+                    />
+                </TouchableOpacity>
+
                 <View className='flex-1'>
                     <View className='flex-row items-center justify-between mb-1'>
                         <View className='flex-row items-center'>
