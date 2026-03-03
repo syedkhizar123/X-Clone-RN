@@ -101,7 +101,7 @@ export const followUser = asyncHandler(async (req, res) => {
             await Notification.create({
                 from: currentUser._id,
                 to: targetUser._id,
-                type: "Follow"
+                type: "follow"
             })
         } catch (err) {
             console.log("Notification create error:", err)
