@@ -97,11 +97,15 @@ export const followUser = asyncHandler(async (req, res) => {
             $push: { followers: currentUser._id }
         })
 
-        await Notification.create({
-            from: currentUser._id,
-            to: targetUser._id,
-            type: "Follow"
-        })
+        try {
+            await Notification.create({
+                from: currentUser._id,
+                to: targetUser._id,
+                type: "Follow"
+            })
+        } catch (err) {
+            console.log("Notification create error:", err)
+        }
     }
 
     res.status(200).json({ message: isFollowing ? "User Unfollowed successfully" : "User followed successfully" })

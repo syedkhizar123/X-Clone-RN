@@ -1,15 +1,17 @@
 import { Alert } from "react-native"
 import { useApiClient, userApi} from "../utils/api"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation , useQueryClient} from "@tanstack/react-query"
 
 
 const useFollow = () => {
     
     const api = useApiClient()
+    const queryClient = useQueryClient()
 
     const followUnfollowUserMutation = useMutation({
         mutationFn: async (targetUserId) => await userApi.followUser(api , targetUserId),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["userProfile"]})
             console.log("Success")
         },
         onError: (err) => {
