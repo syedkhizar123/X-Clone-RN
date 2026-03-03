@@ -7,7 +7,15 @@ import { clerkClient } from "@clerk/express";
 
 export const getUserProfile = asyncHandler(async (req, res) => {
     const { username } = req.params
-    const user = await User.find({ username });
+    const user = await User.findOne({ username })
+        .populate({
+            path: "followers",
+            select: "firstName lastName username profilePicture"
+        })
+        .populate({
+            path: "following",
+            select: "firstName lastName username profilePicture"
+        })
     if (!user) {
         return res.status(404).json({ message: "User Not Found" })
     }
