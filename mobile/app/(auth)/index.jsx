@@ -16,7 +16,7 @@ export default function Index() {
         <View className='flex-1 justify-center'>
 
           {/* DEMO Image */}
-          <View className='itemscenter'>
+          <View className='items-center'>
             <Image
               source={require("../../assets/images/auth2.png")}
               className='size-96'

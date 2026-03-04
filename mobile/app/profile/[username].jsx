@@ -22,9 +22,9 @@ const Username = () => {
     const { userProfile, isLoading, error, refetch, isRefetching } = useUserProfile(username)
     const { posts } = usePost(username)
     const { followUnfollowUser } = useFollow()
-    const [ isFollowModalVisible , setIsFollowModalVisible] = useState(false)
-    const [ modalTitle , setModalTitle] = useState("")
-    const [ selectedList , setSelectedList ] = useState([])
+    const [isFollowModalVisible, setIsFollowModalVisible] = useState(false)
+    const [modalTitle, setModalTitle] = useState("")
+    const [selectedList, setSelectedList] = useState([])
 
 
     if (error) {
@@ -102,15 +102,15 @@ const Username = () => {
                             {
                                 userProfile[0]._id !== currentUser._id && (
 
-                                    userProfile[0].followers.includes(currentUser._id) ? (
-                                        <TouchableOpacity className='border border-gray-300 px-6 py-2 rounded-full bg-gray-200' onPress={() => followUnfollowUser(userProfile[0].clerkId)} >
+                                    userProfile[0].followers.some(user => user._id === currentUser._id) ? (
+                                        <TouchableOpacity className='border border-gray-300 px-6 py-2 rounded-full bg-gray-200' onPress={() => { followUnfollowUser(userProfile[0].clerkId) }} >
                                             <Text className='font-semibold text-gray-5=700'>
                                                 Unfollow
                                             </Text>
                                         </TouchableOpacity>
                                     ) : (
                                         <View>
-                                            <TouchableOpacity className='border border-blue-300 px-6 py-2 rounded-full bg-blue-600' onPress={() => followUnfollowUser(userProfile[0].clerkId)} >
+                                            <TouchableOpacity className='border border-blue-300 px-6 py-2 rounded-full bg-blue-600' onPress={() => { followUnfollowUser(userProfile[0].clerkId) }} >
                                                 <Text className='font-semibold text-white'>
                                                     Follow
                                                 </Text>
@@ -144,6 +144,7 @@ const Username = () => {
 
                             <View className='flex-row'>
                                 <TouchableOpacity className='mr-6' onPress={() => {
+
                                     setIsFollowModalVisible(true)
                                     setSelectedList(userProfile[0].following)
                                     setModalTitle("Following")
@@ -154,7 +155,6 @@ const Username = () => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity className='mr-6' onPress={() => {
-                                    console.log(userProfile[0].followers)
                                     setIsFollowModalVisible(true)
                                     setSelectedList(userProfile[0].followers)
                                     setModalTitle("Followers")
@@ -171,11 +171,12 @@ const Username = () => {
                     <PostsList username={username} />
                 </ScrollView>
 
-                <FollowersModal 
+                <FollowersModal
                     isVisible={isFollowModalVisible}
                     onClose={() => setIsFollowModalVisible(false)}
                     title={modalTitle}
-                    user={selectedList}
+                    usersList={selectedList}
+                    userProfile={userProfile[0]}
                 />
             </SafeAreaView>
         </>

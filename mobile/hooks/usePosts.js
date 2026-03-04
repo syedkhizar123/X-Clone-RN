@@ -13,7 +13,7 @@ export const usePost = (username) => {
     } = useQuery({
         queryKey: username ? ["userPosts", username] : ["posts"],
         queryFn: () => username ? postApi.getUserPosts(api, username) : postApi.getPosts(api),
-        select: (response) => response.data.posts
+        select: (response) => response.data.posts 
     })
 
     const likePostMutation = useMutation({

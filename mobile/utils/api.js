@@ -3,21 +3,45 @@ import axios from "axios"
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL
 
+// export const createApiClient = (getToken) => {
+//     const api = axios.create({ baseURL: API_BASE_URL })
+
+//     api.interceptors.request.use(async (config) => {
+//         const token = await getToken()
+
+//         if (token) {
+//             config.headers.Authorization = `Bearer ${token}`
+//         }
+
+//         return config
+//     })
+
+//     return api
+// }
+
 export const createApiClient = (getToken) => {
-    const api = axios.create({ baseURL: API_BASE_URL })
+  const api = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent":
+        "Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+    },
+  });
 
-    api.interceptors.request.use(async (config) => {
-        const token = await getToken()
+  api.interceptors.request.use(async (config) => {
+    const token = await getToken();
 
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`
-        }
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-        return config
-    })
+    return config;
+  });
 
-    return api
-}
+  return api;
+};
 
 export const useApiClient = () => {
     const { getToken } = useAuth()

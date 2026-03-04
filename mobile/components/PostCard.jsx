@@ -30,9 +30,11 @@ const PostCard = ({ post, onLike, onDelete, onComment, isLiked, currentUser }) =
                 <View className='flex-1'>
                     <View className='flex-row items-center justify-between mb-1'>
                         <View className='flex-row items-center'>
-                            <Text className='font-bold text-gray-600 mr-1'>
-                                {post.user.firstName} {post.user.lastName}
-                            </Text>
+                            <TouchableOpacity onPress={() => router.push(`/profile/${post.user.username}`)}>
+                                <Text className='font-bold text-gray-600 mr-1'>
+                                    {post.user.firstName} {post.user.lastName}
+                                </Text>
+                            </TouchableOpacity>
                             <Text className='text-gray-500 ml-1'>
                                 @{post.user.username} . {formatDate(post.createdAt)}
                             </Text>

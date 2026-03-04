@@ -11,6 +11,7 @@ const useProfile = () => {
 
     const [ isEditing , setIsEditing ] = useState(false)
     const [ formData , setFormData ] = useState({
+        profilePicture: "",
         firstName: "",
         lastName: "",
         bio: "",
@@ -34,6 +35,7 @@ const useProfile = () => {
     const openModal = () => {
         if(currentUser) {
             setFormData({
+                profilePicture: currentUser.profilePicture || "" ,
                 firstName: currentUser.firstName || "",
                 lastName: currentUser.lastName || "",
                 bio: currentUser.bio || "",
