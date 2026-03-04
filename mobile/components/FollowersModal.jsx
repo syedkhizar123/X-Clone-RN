@@ -8,7 +8,7 @@ const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) =
     return (
         <Modal visible={isVisible} animationType='slide' presentationStyle='pageSheet'>
             <View className="flex-row items-center justify-between px-4 py-5 border-b border-gray-100">
-                {/* <TouchableOpacity onPress={() => console.log(currentUser._id !== userProfile._id)}> */}
+                {/* <TouchableOpacity onPress={() => console.log(currentUser._id , userProfile._id)}> */}
                 <TouchableOpacity onPress={onClose}>
                     <Text className='text-blue-500 text-lg'>
                         Close
@@ -31,9 +31,10 @@ const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) =
                                         <Text className='font-semibold text-gray-900'>{user.firstName} {user.lastName}</Text>
                                     </TouchableOpacity>
                                 </View>
+                                
 
                                 {
-                                    currentUser.following.includes(user._id) ? (
+                                    currentUser.following.includes(user._id)  ? (
                                         currentUser._id === userProfile._id && title === "Following" ? (
                                             null
                                         ) : (
