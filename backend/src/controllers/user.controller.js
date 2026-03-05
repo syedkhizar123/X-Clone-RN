@@ -59,7 +59,15 @@ export const syncUser = asyncHandler(async (req, res) => {
 
 export const getCurrentUser = asyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
-    const user = await User.findOne({ clerkId: userId })
+    const user = await User.find({ clerkId: userId })
+        .populate({
+            path: "followers",
+            select: "firstName lastName username profilePicture clerkId"
+        })
+        .populate({
+            path: "following",
+            select: "firstName lastName username profilePicture clerkId"
+        })
 
     if (!user) {
         return res.status(404).json({ message: "User Not Found" })

@@ -46,7 +46,7 @@ const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) =
                                         )
                                     ) : (
                                         user._id !== currentUser._id ?
-                                            <TouchableOpacity className='border border-gray-200 rounded-full bg-blue-500 px-6  flex items-center justify-center' onPress={() => console.log(user)}>
+                                            <TouchableOpacity className='border border-gray-200 rounded-full bg-blue-500 px-6  flex items-center justify-center' onPress={() => {followUnfollowUser(user.clerkId)  , onClose() , router.push(`/profile/${user.username}`)}}>
                                                 <Text className='text-base text-white'>Follow</Text>
                                             </TouchableOpacity> :
                                             <View className='border border-gray-200 rounded-full px-6 flex items-center justify-center'>
