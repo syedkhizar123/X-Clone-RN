@@ -26,17 +26,17 @@ const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) =
                         {usersList.map((user) => (
                             <View key={user._id} className='flex-row px-6 py-3 border-b border-gray-100 justify-between ' >
                                 <View className='flex-row gap-3 items-center '>
-                                    <TouchableOpacity onPress={() => { onClose() , router.push(`/profile/${user.username}`) } }>
+                                    <TouchableOpacity onPress={() => { onClose(), router.push(`/profile/${user.username}`) }}>
                                         <Image source={{ uri: user.profilePicture }} className="size-12 rounded-full" />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => { onClose() , router.push(`/profile/${user.username}`) } }>
+                                    <TouchableOpacity onPress={() => { onClose(), router.push(`/profile/${user.username}`) }}>
                                         <Text className='font-semibold text-gray-900'>{user.firstName} {user.lastName}</Text>
                                     </TouchableOpacity>
                                 </View>
-                                
+
 
                                 {
-                                    currentUser.following.includes(user._id)  ? (
+                                    currentUser.following.includes(user._id) ? (
                                         currentUser._id === userProfile._id && title === "Following" ? (
                                             null
                                         ) : (
@@ -46,12 +46,10 @@ const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) =
                                         )
                                     ) : (
                                         user._id !== currentUser._id ?
-                                            <TouchableOpacity className='border border-gray-200 rounded-full bg-blue-500 px-6  flex items-center justify-center' onPress={() => {followUnfollowUser(user.clerkId)  , onClose() , router.push(`/profile/${user.username}`)}}>
+                                            <TouchableOpacity className='border border-gray-200 rounded-full bg-blue-500 px-6  flex items-center justify-center' onPress={() => { followUnfollowUser(user.clerkId) }}>
                                                 <Text className='text-base text-white'>Follow</Text>
                                             </TouchableOpacity> :
-                                            <View className='border border-gray-200 rounded-full px-6 flex items-center justify-center'>
-                                                <Text className='text-base text-gray-900'>You</Text>
-                                            </View>
+                                            null
                                     )
                                 }
                             </View>

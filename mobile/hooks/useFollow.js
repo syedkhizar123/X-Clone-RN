@@ -12,6 +12,7 @@ const useFollow = () => {
         mutationFn: async (targetUserId) => await userApi.followUser(api , targetUserId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["userProfile"]})
+            queryClient.invalidateQueries({ queryKey: ["authUser"]})
         },
         onError: (err) => {
             Alert.alert("Error" , "Failed to follow user")

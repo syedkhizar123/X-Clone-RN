@@ -10,6 +10,7 @@ import useProfile from '../../hooks/useProfile'
 import EditProfileModal from '../../components/EditProfileModal'
 import { useState } from 'react'
 import FollowersModal from '../../components/FollowersModal'
+import useUserProfile from '../../hooks/useUserProfile'
 
 const ProfileScreen = () => {
 
@@ -17,6 +18,7 @@ const ProfileScreen = () => {
     const insets = useSafeAreaInsets()
 
     const { posts: userPosts, refetch: refetchPosts, isLoading: isRefetching } = usePost(currentUser?.username)
+    const { userProfile, isLoading: LoadingCurrentUser, error, refetch: refetchCurrentUser, isRefetching: retchingCurrentUSer } = useUserProfile(currentUser?.username)
 
     const {
         isEditing,
@@ -111,9 +113,10 @@ const ProfileScreen = () => {
 
                         <View className='flex-row'>
                             <TouchableOpacity className='mr-6' onPress={() => {
+                                if (!userProfile?.[0]) return
                                 setIsFollowModalVisible(true)
-                                setSelectedList(currentUser.following)
                                 setModalTitle("Following")
+                                setSelectedList(userProfile[0].following)
                             }} >
                                 <Text className='text-gray-900'>
                                     <Text className='font-bold'>{currentUser.following?.length}</Text>
@@ -121,9 +124,11 @@ const ProfileScreen = () => {
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity className='mr-6' onPress={() => {
+                                if (!userProfile?.[0]) return
                                 setIsFollowModalVisible(true)
-                                setSelectedList(currentUser.followers)
                                 setModalTitle("Followers")
+                                setSelectedList(userProfile[0].followers)
+
                             }} >
                                 <Text className='text-gray-900'>
                                     <Text className='font-bold'>{currentUser.followers?.length}</Text>
