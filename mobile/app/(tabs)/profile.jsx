@@ -9,7 +9,6 @@ import PostsList from '../../components/PostsList'
 import useProfile from '../../hooks/useProfile'
 import EditProfileModal from '../../components/EditProfileModal'
 import { useState } from 'react'
-import FollowersModal from '../../components/FollowersModal'
 
 const ProfileScreen = () => {
 
@@ -29,9 +28,7 @@ const ProfileScreen = () => {
         refetch
     } = useProfile()
 
-    const [isFollowModalVisible, setIsFollowModalVisible] = useState(false)
-    const [modalTitle, setModalTitle] = useState("")
-    const [selectedList, setSelectedList] = useState([])
+  
 
     if (isLoading) {
         return (
@@ -110,21 +107,13 @@ const ProfileScreen = () => {
                         </View>
 
                         <View className='flex-row'>
-                            <TouchableOpacity className='mr-6' onPress={() => {
-                                setIsFollowModalVisible(true)
-                                setSelectedList(currentUser.following)
-                                setModalTitle("Following")
-                            }} >
+                            <TouchableOpacity className='mr-6' >
                                 <Text className='text-gray-900'>
                                     <Text className='font-bold'>{currentUser.following?.length}</Text>
                                     <Text className='text-gray-500'> Following</Text>
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className='mr-6' onPress={() => {
-                                setIsFollowModalVisible(true)
-                                setSelectedList(currentUser.followers)
-                                setModalTitle("Followers")
-                            }} >
+                            <TouchableOpacity className='mr-6' >
                                 <Text className='text-gray-900'>
                                     <Text className='font-bold'>{currentUser.followers?.length}</Text>
                                     <Text className='text-gray-500'> Followers</Text>
@@ -145,13 +134,7 @@ const ProfileScreen = () => {
                 updateFormField={updateFormField}
                 isUpdating={isUpdating}
             />
-            <FollowersModal
-                isVisible={isFollowModalVisible}
-                onClose={() => setIsFollowModalVisible(false)}
-                title={modalTitle}
-                usersList={selectedList}
-                userProfile={currentUser}
-            />
+          
         </SafeAreaView>
     )
 }

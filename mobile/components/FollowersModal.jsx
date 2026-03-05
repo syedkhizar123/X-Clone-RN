@@ -1,10 +1,12 @@
 import { View, Text, Modal, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { useCurrentUser } from '../hooks/useCurrentUser'
 import { router } from 'expo-router'
+import useFollow from '../hooks/useFollow'
 
 const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) => {
 
     const { currentUser } = useCurrentUser()
+    const { followUnfollowUser } = useFollow()
     return (
         <Modal visible={isVisible} animationType='slide' presentationStyle='pageSheet'>
             <View className="flex-row items-center justify-between px-4 py-5 border-b border-gray-100">
@@ -44,7 +46,7 @@ const FollowersModal = ({ isVisible, onClose, usersList, title, userProfile }) =
                                         )
                                     ) : (
                                         user._id !== currentUser._id ?
-                                            <TouchableOpacity className='border border-gray-200 rounded-full bg-blue-500 px-6  flex items-center justify-center'>
+                                            <TouchableOpacity className='border border-gray-200 rounded-full bg-blue-500 px-6  flex items-center justify-center' onPress={() => console.log(user)}>
                                                 <Text className='text-base text-white'>Follow</Text>
                                             </TouchableOpacity> :
                                             <View className='border border-gray-200 rounded-full px-6 flex items-center justify-center'>
